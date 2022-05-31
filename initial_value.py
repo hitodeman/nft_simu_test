@@ -12,7 +12,7 @@ type = 'Jogger'
 quality = 'Common'
 #■LVup設定
 lvUp_setting = {
-    'lvUp_max_limited':30,
+    'lvUp_max_limited':14,
     'lvUp_alloc_efficiency':4,
     'lvUp_alloc_luck':0,
     'lvUp_alloc_confort':0,
@@ -33,7 +33,7 @@ APIURL['GMT_GET_URL'] = 'https://cryptoprices.cc/GMT'
 GST_flg = True
 
 #■計算期間
-calc_range = 150
+calc_range = 60
 #■初期投資額,単位SOL値
 initial_cost_SOL = 13
 #■レベル初期値　0固定でいいかも？

@@ -10,7 +10,7 @@ for i in range(iv.calc_range):
     df_repair_cost = rc.df_repair_cost[rc.df_repair_cost["LEVEL"] == (GetCurrentLevel(iv.level))]
     df_repair_cost = df_repair_cost.at[(GetCurrentLevel(iv.level)),iv.quality]
     #現在のレベルのGST取得
-    current_engage_gst = Engage_GST((GetCurrentLevel(iv.level)+i),LevelUpPoint(iv.quality),EnergyLimited(iv.NumOfSneakers),iv.Sneakers_initial_attr['initial_efficiency'],df_gstcap)
+    current_engage_gst = Engage_GST((GetCurrentLevel(iv.level)),LevelUpPoint(iv.quality),EnergyLimited(iv.NumOfSneakers),iv.Sneakers_initial_attr['initial_efficiency'],df_gstcap)
     #累積獲得量
     iv.accum_gst = Accum_GST(iv.accum_gst,df_repair_cost,current_engage_gst)
     #出力用
@@ -21,8 +21,8 @@ for i in range(iv.calc_range):
     print(f'累積獲得量：{iv.accum_gst}')
     print(f'獲得GST：{current_engage_gst}')
     print(f"""
-期待収益：${trans_money['accum_dollar']},{trans_money['accum_yen']}円
-初期投資額：${initial_cost['initial_cost_dollar']},{initial_cost['initial_cost_yen']}円
+期待収益　：${trans_money['accum_dollar']},  {trans_money['accum_yen']}円
+初期投資額：${initial_cost['initial_cost_dollar']},   {initial_cost['initial_cost_yen']}円
     """)
     #レベルアップの処理
     lv_cost_time = 0
