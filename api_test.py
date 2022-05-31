@@ -23,6 +23,7 @@ for i in range(iv.calc_range):
     print(f"""
 期待収益　：${trans_money['accum_dollar']},  {trans_money['accum_yen']}円
 初期投資額：${initial_cost['initial_cost_dollar']},   {initial_cost['initial_cost_yen']}円
+損益収支　：${format(float(trans_money['accum_dollar'])-float(initial_cost['initial_cost_dollar']),'.2f')},   {format(float(trans_money['accum_yen'])-float(initial_cost['initial_cost_yen']),'.0f')}円
     """)
     #レベルアップの処理
     lv_cost_time = 0
