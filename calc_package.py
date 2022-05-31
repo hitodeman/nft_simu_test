@@ -3,11 +3,11 @@ import math
 #初期投資額出力,ドル表示と円表示
 def InitialCost(flg,cost_SOL,static_SOL,static_USD_JPY,SOL,USD_JPY):
     if  flg:
-        initial_cost_dollar = cost_SOL*static_SOL
-        initial_cost_yen = format(initial_cost_dollar*float(static_USD_JPY),'.0f')
+        initial_cost_dollar = format(cost_SOL*static_SOL,'.2f')
+        initial_cost_yen = format(float(initial_cost_dollar)*float(static_USD_JPY),'.0f')
     else:
-        initial_cost_dollar = cost_SOL*SOL
-        initial_cost_yen = format(initial_cost_dollar*float(USD_JPY),'.0f')
+        initial_cost_dollar = format(cost_SOL*SOL,'.2f')
+        initial_cost_yen = format(float(initial_cost_dollar)*float(USD_JPY),'.0f')
     return {
         'initial_cost_dollar':initial_cost_dollar,
         'initial_cost_yen':initial_cost_yen
@@ -16,11 +16,11 @@ def InitialCost(flg,cost_SOL,static_SOL,static_USD_JPY,SOL,USD_JPY):
 #GSTのドル変換、円変換処理
 def TransMoney(flg,accum,GST,static_GST,USD_JPY,static_USD_JPY):
     if  flg:
-        accum_dollar = accum*static_GST
-        accum_yen = format(accum_dollar*float(static_USD_JPY),'.0f')
+        accum_dollar = format(accum*static_GST,'.2f')
+        accum_yen = format(float(accum_dollar)*float(static_USD_JPY),'.0f')
     else:
-        accum_dollar = accum*GST
-        accum_yen = format(accum_dollar*float(USD_JPY),'.0f')
+        accum_dollar = format(accum*GST,'.2f')
+        accum_yen = format(float(accum_dollar)*float(USD_JPY),'.0f')
     return {
         'accum_dollar':accum_dollar,
         'accum_yen':accum_yen

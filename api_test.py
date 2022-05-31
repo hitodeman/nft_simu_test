@@ -13,13 +13,16 @@ for i in range(iv.calc_range):
     current_engage_gst = Engage_GST((GetCurrentLevel(iv.level)+i),LevelUpPoint(iv.quality),EnergyLimited(iv.NumOfSneakers),iv.Sneakers_initial_attr['initial_efficiency'],df_gstcap)
     #累積獲得量
     iv.accum_gst = Accum_GST(iv.accum_gst,df_repair_cost,current_engage_gst)
+    #出力用
+    trans_money = TransMoney(iv.j_rate_static_flg,iv.accum_gst,iv.j_rate['GST'],iv.j_rate['static_GST'],iv.j_rate['USD_JPY'],iv.j_rate['static_USD_JPY'])
+    initial_cost = InitialCost(iv.j_rate_static_flg,iv.initial_cost_SOL,iv.j_rate['static_SOL'],iv.j_rate['static_USD_JPY'],iv.j_rate['SOL'],iv.j_rate['USD_JPY'])
     print(f'--------------------------------------{i+1}日目----------------------------------------')
     print(f'現在のレベル：{GetCurrentLevel(iv.level)}')
     print(f'累積獲得量：{iv.accum_gst}')
     print(f'獲得GST：{current_engage_gst}')
     print(f"""
-期待収益：{TransMoney(iv.j_rate_static_flg,iv.accum_gst,iv.j_rate['GST'],iv.j_rate['static_GST'],iv.j_rate['USD_JPY'],iv.j_rate['static_USD_JPY'])}
-初期投資額：{InitialCost(iv.j_rate_static_flg,iv.initial_cost_SOL,iv.j_rate['static_SOL'],iv.j_rate['static_USD_JPY'],iv.j_rate['SOL'],iv.j_rate['USD_JPY'])}
+期待収益：${trans_money['accum_dollar']},{trans_money['accum_yen']}円
+初期投資額：${initial_cost['initial_cost_dollar']},{initial_cost['initial_cost_yen']}円
     """)
     #レベルアップの処理
     lv_cost_time = 0
