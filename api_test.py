@@ -1,14 +1,23 @@
 from math import isnan
+import pprint
+import json
 
 import read_csv as rc
 import initial_value as iv
 from calc_package import Engage_GST,LevelUpPoint,GetCurrentLevel,EnergyLimited,Accum_GST, RepairCost,TransMoney,InitialCost,LevelUp
 from common_package import Output_result,Rate
 
+#api用のjson文字列作成変数
+nft_api = {}
+nft_api['days'] = []
+
 if iv.j_rate_static_flg:
     Rate(iv.j_rate['static_SOL'],iv.j_rate['static_GST'],iv.j_rate['static_GMT'],iv.j_rate['static_USD_JPY'])
 else:
     Rate(iv.j_rate['SOL'],iv.j_rate['GST'],iv.j_rate['GMT'],iv.j_rate['USD_JPY'])
+
+#現在のレート格納
+nft_api['rate'] = iv.j_rate
 
 for i in range(iv.calc_range):
     #現在のレベルのGST獲得上限を取得
@@ -53,14 +62,32 @@ for i in range(iv.calc_range):
         if iv.accum_gst < df_lv_cost:
             flg = 0
             Output_result(i,flg,iv.lvUp_setting['lvUp_max_limited'],repair_cost,current_engage_gst,df_lv_cost,GetCurrentLevel(iv.level),iv.accum_gst,trans_money,initial_cost,df_repair_cost)
+            nft_api_days = {
+                'day':i + 1,
+                'level':GetCurrentLevel(iv.level),
+                'PaLBalance':format(float(trans_money['accum_yen'])-float(initial_cost['initial_cost_yen']),'.0f'),
+            }
+            nft_api['days'].append(nft_api_days)
             break
         elif lv_cost_time >= 24:
             flg = 1
             Output_result(i,flg,iv.lvUp_setting['lvUp_max_limited'],repair_cost,current_engage_gst,df_lv_cost,GetCurrentLevel(iv.level),iv.accum_gst,trans_money,initial_cost,df_repair_cost)
+            nft_api_days = {
+                'day':i + 1,
+                'level':GetCurrentLevel(iv.level),
+                'PaLBalance':format(float(trans_money['accum_yen'])-float(initial_cost['initial_cost_yen']),'.0f'),
+            }
+            nft_api['days'].append(nft_api_days)
             break
         elif GetCurrentLevel(iv.level) >= iv.lvUp_setting['lvUp_max_limited']:
             flg = 2
             Output_result(i,flg,iv.lvUp_setting['lvUp_max_limited'],repair_cost,current_engage_gst,df_lv_cost,GetCurrentLevel(iv.level),iv.accum_gst,trans_money,initial_cost,df_repair_cost)
+            nft_api_days = {
+                'day':i + 1,
+                'level':GetCurrentLevel(iv.level),
+                'PaLBalance':format(float(trans_money['accum_yen'])-float(initial_cost['initial_cost_yen']),'.0f'),
+            }
+            nft_api['days'].append(nft_api_days)
             break
         else:
             lv_cost_time += df_lv_cost_time
@@ -69,3 +96,5 @@ for i in range(iv.calc_range):
             flg = 3
             Output_result(i,flg,iv.lvUp_setting['lvUp_max_limited'],repair_cost,current_engage_gst,df_lv_cost,GetCurrentLevel(iv.level),iv.accum_gst,trans_money,initial_cost,df_repair_cost)
             #break#一日一回のみレベルをあげる、breakを外せば最大までレベリング可能
+
+pprint.pprint(nft_api)
