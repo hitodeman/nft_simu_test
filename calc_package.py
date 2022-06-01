@@ -1,4 +1,6 @@
 import math
+from decimal import Decimal,ROUND_HALF_UP
+
 
 #初期投資額出力,ドル表示と円表示
 def InitialCost(flg,cost_SOL,static_SOL,static_USD_JPY,SOL,USD_JPY):
@@ -84,14 +86,23 @@ def Engage_GST(current_level,point_per_level,energy,initial_efficiency,current_g
 
 #累積獲得量
 def Accum_GST(accum_gst,repair_cost,engage_gst):
-    accum_gst += int(engage_gst)
+    accum_gst += float(engage_gst)
     accum_gst -= repair_cost
     return accum_gst
 
-#レベル取得 仕様まだ決めてない！
+#レベル取得 わかりやすいようにしているだけ、今後も見越してメソッド化
 def GetCurrentLevel(level):
     return level
 
-def LevelUp(current_level):
-    return current_level+1
+#修理コスト計算
+def RepairCost(repair_coeff,resilience,energy_limited):
+    sys_temp = float((10.5*resilience**(-0.61))*energy_limited)
+    sys_temp_decimal = Decimal(str(sys_temp)).quantize(Decimal('0'), rounding=ROUND_HALF_UP)
+    repair_cost = float(sys_temp_decimal) * repair_coeff
+    return repair_cost
 
+#レベルアップと同時にコストを減算
+def LevelUp(accum_gst,level_up_cost,level):
+    level += 1
+    accum_gst -= level_up_cost
+    return level,accum_gst

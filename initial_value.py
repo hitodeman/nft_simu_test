@@ -30,7 +30,7 @@ APIURL['GMT_GET_URL'] = 'https://cryptoprices.cc/GMT'
 
 #GST_BSCはTRUE,GST_SOLはFalse
 #■
-GST_flg = True
+GST_flg = False
 
 #■計算期間
 calc_range = 60
@@ -52,6 +52,8 @@ GST_data = json.loads(GST_get.text)
 GMT_get = requests.get(APIURL['GMT_GET_URL'])
 GMT_data = json.loads(GMT_get.text)
 
+GMT_GST = GMT_data/GST_data
+
 #--------------yahoofinanceから為替取得,代替案欲しいかも商用利用怪しい？--------------
 USD_JPY = yf.Ticker("USDJPY=X")
 usd_jpy_val = 0
@@ -65,19 +67,24 @@ for i in df_usd_jpy.values():
 j_rate_static_flg = False
 
 #■staticはinputで変動
+static_GST = 4.53
+static_GMT = 2.59
+static_GMT_GST = static_GMT/static_GST
 j_rate = {
     'SOL':SOL_data,
     'GST':GST_data,
     'GMT':GMT_data,
     'USD_JPY':usd_jpy_val,
-    'static_SOL':70,
-    'static_GST':4.5,
-    'static_GMT':2.59,
-    'static_USD_JPY':131
+    'GMT_GST':GMT_GST,
+    'static_SOL':74.08,
+    'static_GST':static_GST,
+    'static_GMT':static_GMT,
+    'static_GMT_GST':static_GMT_GST,
+    'static_USD_JPY':131.15
 }
 #■スニーカーのレアリティごとの所持数
 NumOfSneakers = {
-    'NumOfCommon' : 1,
+    'NumOfCommon' : 3,
     'NumOfUncommon' : 0,
     'NumOfRare' : 0,
     'NumOfEpic' : 0,
@@ -99,3 +106,11 @@ engageOf_typerate = {
     'Runner' :6,
     'Trainer':5,
 }
+
+#耐久値減少時の獲得GST補正値
+durability_comff = {
+    'fifty':0.5,
+    'twenty':0.1
+}
+#耐久値
+durability = 100

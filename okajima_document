@@ -34,3 +34,61 @@ Lv_GSTのflgに使用されている
 5.日数を1増やし１に戻る
 →完了
 -----------------------------------------------------------------------
+・修理コスト
+=IF(A38="","",
+IF(
+    ROUND((10.5*D38^-0.61)*$I$11,0)*IF($K$7="Common",VLOOKUP(B38,'Repair Cost'!A:B,2,FALSE),IF($K$7="Uncommon",VLOOKUP(B38,'Repair Cost'!A:C,3,FALSE),0))>E38,0,ROUND((10.5*D38^-0.61)*$I$11,0)*IF($K$7="Common",VLOOKUP(B38,'Repair Cost'!A:B,2,FALSE),IF($K$7="Uncommon",VLOOKUP(B38,'Repair Cost'!A:C,3,FALSE),0))
+    )
+)
+
+ROUND((10.5*D38^-0.61)*$I$11,0)
+[
+r = (10.5*resilience(current_level)**(-0.61))*Energy上限
+*
+(IF($K$7="Common",VLOOKUP(B38,'Repair Cost'!A:B,2,FALSE),IF($K$7="Uncommon",VLOOKUP(B38,'Repair Cost'!A:C,3,FALSE),0))
+if quality == 'Common':
+    リペアコストでレベルが一致した係数を取り出す
+elif quality == 'Uncommon':
+    リペアコストでレベルが一致した係数を取り出す
+else:
+    0を返す)
+]
+>獲得GSTなら0を返す
+
+そうでないなら、上記の計算結果を返す
+
+
+2022/06/01
+レベルアップ時の仕様
+・レベリング時にレベルアップコストを支払う
+
+・単位変換
+a$/GMT
+b$/GST
+10GMT
+10*a/b
+
+calc_package RepairCostでsys_tempの桁を丸めているが本当に必要かどうか
+スプレッドシートではそうなっていたが、、、、
+ホワイトペーパー要確認
+
+
+スプレッドシートのシミュレータと同条件で値が一致したため、作成完了とする。
+→耐久値と修理コストに関して、もう少し考える必要あるかも
+
+回帰分析
+X軸・・・耐久値(Resilience)
+Y軸・・・1エナジーあたりの消費Durability
+y=A+Bx+Cx2	計算値
+xの平均値	16.9952381
+yの平均値	1.991428571
+相関係数 r	0.9693127132
+A	4.18102192
+B	-0.176478132
+C	0.00242567028
+
+
+残りの実装
+メソッドのクラス化・・・もう少し先
+json形式で渡す値の選定
+djangoの構築
