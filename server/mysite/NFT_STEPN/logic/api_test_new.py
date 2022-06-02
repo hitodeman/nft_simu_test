@@ -7,7 +7,6 @@ from . import initial_value as iv
 from .calc_package import Engage_GST,LevelUpPoint,GetCurrentLevel,EnergyLimited,Accum_GST, RepairCost,TransMoney,InitialCost,LevelUp
 from .common_package import Output_result_print,Rate_print
 
-#実際にはoutput_result関数の引数にPOST送信のデータをとり、それを元に計算させる予定
 #初期値をどう連携取ろうか・・・
 def output_result(
     initial_cost_SOL = iv.initial_cost_SOL,
@@ -89,6 +88,7 @@ def output_result(
                     'level':GetCurrentLevel(level),
                     'PaLBalance':format(float(trans_money['accum_yen'])-float(initial_cost['initial_cost_yen']),'.0f'),
                     'expected_earnings':float(trans_money['accum_yen']),
+                    'repair_cost':repair_cost
                 }
                 nft_api['days'].append(nft_api_days)
                 break
@@ -100,6 +100,7 @@ def output_result(
                     'level':GetCurrentLevel(level),
                     'PaLBalance':format(float(trans_money['accum_yen'])-float(initial_cost['initial_cost_yen']),'.0f'),
                     'expected_earnings':float(trans_money['accum_yen']),
+                    'repair_cost':repair_cost
                 }
                 nft_api['days'].append(nft_api_days)
                 break
@@ -111,6 +112,7 @@ def output_result(
                     'level':GetCurrentLevel(level),
                     'PaLBalance':format(float(trans_money['accum_yen'])-float(initial_cost['initial_cost_yen']),'.0f'),
                     'expected_earnings':float(trans_money['accum_yen']),
+                    'repair_cost':repair_cost
                 }
                 nft_api['days'].append(nft_api_days)
                 break
