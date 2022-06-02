@@ -9,6 +9,13 @@ from common_package import Output_result,Rate
 
 #api用のjson文字列作成変数
 nft_api = {}
+nft_api['initial'] = [
+    iv.initial_cost_SOL,
+    iv.j_rate_static_flg,
+    iv.lvUp_setting,
+    iv.type,
+    iv.calc_range
+]
 nft_api['days'] = []
 
 if iv.j_rate_static_flg:
