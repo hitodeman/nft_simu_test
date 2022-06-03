@@ -9,6 +9,7 @@ from .common_package import Output_result_print,Rate_print
 
 #初期値をどう連携取ろうか・・・
 def output_result(
+    #初期値をデフォルトで設定
     initial_cost_SOL = iv.initial_cost_SOL,
     j_rate_static_flg = iv.j_rate_static_flg,
     lvUp_setting = iv.lvUp_setting,
@@ -32,6 +33,7 @@ def output_result(
     }
     nft_api['days'] = []
 
+    #レート出力
     if j_rate_static_flg:
         Rate_print(j_rate['static_SOL'],j_rate['static_GST'],j_rate['static_GMT'],j_rate['static_USD_JPY'])
     else:
@@ -40,6 +42,7 @@ def output_result(
     #現在のレート格納
     nft_api['rate'] = j_rate
 
+    #1日ごとにループ回す
     for i in range(calc_range):
         #現在のレベルのGST獲得上限を取得
         df_gstcap = rc.df_gspcap[rc.df_gspcap["LEVEL"] == (GetCurrentLevel(level))]
@@ -53,13 +56,13 @@ def output_result(
         #累積獲得量
         accum_gst = Accum_GST(accum_gst,repair_cost,current_engage_gst)
         #修理できない日の処理をどうするのか検討必要
-        if accum_gst < 0:
-            print('''
-    累積獲得量が修理によってマイナスになりました。
-    処理を終了します。
-            ''')
-            break
-        #出力用
+#        if accum_gst < 0:
+#            print('''
+#    累積獲得量が修理によってマイナスになりました。
+#    処理を終了します。
+#            ''')
+#            break
+        #出力用変数
         initial_cost = InitialCost(j_rate_static_flg,initial_cost_SOL,j_rate['static_SOL'],j_rate['static_USD_JPY'],j_rate['SOL'],j_rate['USD_JPY'])
         
         #レベルアップの処理

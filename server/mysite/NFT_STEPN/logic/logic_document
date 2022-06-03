@@ -91,5 +91,38 @@ djangoの構築
 3.損益収支(1ループごと)
 4.現在レート(SOL,GMT,GST,USD_JPY)１回目のみ
 5.レベル
-→djangoで動作させるときは、10分間隔で値を更新する。迷惑かからないように。
 6.初期値
+
+
+
+
+--------------scheduleメモ------------------------------------------------------
+ap_scheduler.pyのadd_jobのサンプルを下記に変更可能
+
+# 5分おきに実行
+scheduler.add_job(periodic_execution, 'interval', minutes=5)
+
+# 1時間5秒おきに実行
+scheduler.add_job(periodic_execution, 'interval', hours=1, seconds=5)
+
+# 1日おきに実行
+scheduler.add_job(periodic_execution, 'interval', days=1)
+
+# 1週間おきに実行
+scheduler.add_job(periodic_execution, 'interval', weeks=1)
+
+# 2022年4月1日19時〜20時の間、1分おきに実行
+scheduler.add_job(periodic_execution, 'interval', minutes=1,
+    start_date="2022-04-01 19:00:00",
+    end_date="2022-04-01 20:00:00")
+
+# 毎時20分に実行
+scheduler.add_job(periodic_execution, 'cron', minute=20)
+
+# 月曜から金曜の間、9時になると実行
+scheduler.add_job(periodic_execution, 'cron', hour=9, day_of_week='mon-fri')
+
+--------------scheduleメモおわり------------------------------------------------------
+
+2022/06/03
+logicに変更なし

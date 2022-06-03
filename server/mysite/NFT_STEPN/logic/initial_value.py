@@ -1,8 +1,8 @@
-import requests
-import pprint
-import json
-from datetime import datetime,timedelta
-import yfinance as yf
+#import requests
+#import pprint
+#import json
+#from datetime import datetime,timedelta
+#import yfinance as yf
 
 #■マークがある変数はinputによって値が変動
 
@@ -40,27 +40,38 @@ initial_cost_SOL = 13
 level = 0
 
 #仮想通貨Open初期値
-SOL_get = requests.get(APIURL['SOL_GET_URL'])
-SOL_data = json.loads(SOL_get.text)
-
+#SOL_get = requests.get(APIURL['SOL_GET_URL'])
+"""
 if GST_flg:
     GST_get = requests.get(APIURL['GST_BSC_GET_URL'])
 else:
     GST_get = requests.get(APIURL['GST_SOL_GET_URL'])
 GST_data = json.loads(GST_get.text)
+"""
+GST_BSC_data = 0
+GMT_GST_BSC = 0
+GST_SOL_data = 0
+GMT_GST_SOL = 0
+SOL_data = 0
+GMT_data = 0
+usd_jpy_val = 0
+#GMT_get = requests.get(APIURL['GMT_GET_URL'])
+if GST_flg:
+    GST_data = GST_BSC_data
+    GMT_GST = GMT_GST_BSC
+else:
+    GST_data = GST_SOL_data
+    GMT_GST = GMT_GST_SOL
 
-GMT_get = requests.get(APIURL['GMT_GET_URL'])
-GMT_data = json.loads(GMT_get.text)
-
-GMT_GST = GMT_data/GST_data
+#GMT_GST = GMT_data/GST_data
 
 #--------------yahoofinanceから為替取得,代替案欲しいかも商用利用怪しい？--------------
-USD_JPY = yf.Ticker("USDJPY=X")
-usd_jpy_val = 0
-df_usd_jpy = USD_JPY.history(start=(datetime.today()-timedelta(weeks=1)),end=datetime.today())
-df_usd_jpy = df_usd_jpy['Open'].tail(1).to_dict()
-for i in df_usd_jpy.values():
-    usd_jpy_val = format(i,'.2f')
+#USD_JPY = yf.Ticker("USDJPY=X")
+#usd_jpy_val = 0
+#df_usd_jpy = USD_JPY.history(start=(datetime.today()-timedelta(weeks=1)),end=datetime.today())
+#df_usd_jpy = df_usd_jpy['Open'].tail(1).to_dict()
+#for i in df_usd_jpy.values():
+#    usd_jpy_val = format(i,'.2f')
 #----------------------------------------------------------------
 
 #■価格固定フラグ,Trueならstaticを使用

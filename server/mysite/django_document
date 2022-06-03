@@ -10,14 +10,21 @@ mysite→NFT_GAME
 
 ・SOLや為替レート取得タイミングを1日一回に変更すること
 参考資料：https://techacademy.jp/magazine/20872
+参考資料２：https://kosuke-space.com/django-apscheduler
 
 
-
+2022/06/03
+・logic/ap_scheduler.pyを追加し、仮想通貨及び為替レートの定期取得処理を追加
+・POST送信時の動作未確認
 
 
 ---------------------------お知らせ-------------------------------
 
 1.ローカルでのテストは下記urlアクセスでjson出力が確認可能。
 http://localhost:8000/NFT_STEPN/calc_response
+
+2.実行時は下記コマンド実行
+pip install apscheduler
+pip install yfinance
 
 -----------------------------------------------------------------
